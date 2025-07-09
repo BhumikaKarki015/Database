@@ -1,0 +1,128 @@
+INSERT INTO Program VALUES ('CS2001', 'Computing', 'BSc Program');
+INSERT INTO Program VALUES ('CS2002', 'Networking', 'BSc Program');
+INSERT INTO Program VALUES ('CS2003', 'Multimedia', 'BSc Program");
+INSERT INTO Program VALUES ('CS2004', 'Artificial Intelligence', 'BSc Program");
+INSERT INTO Program VALUES ('BA2001', 'Business Administration', 'BA Program");
+INSERT INTO Program VALUES ('BA2003', 'Accounting and Finance', 'BA Program');
+INSERT INTO Program VALUES ('BA2002', 'Digital Business Management', 'BA Program");
+
+
+
+INSERT INTO Teacher VALUES ('T001', 'Manju Karki', 'Computing');
+INSERT INTO Teacher VALUES ('T002', 'Sambhav Gurung', 'Networking');
+INSERT INTO Teacher VALUES ('T003', 'Sophiya Karki', 'Multimedia');
+INSERT INTO Teacher VALUES ('T004', 'Sandhya Thapa', 'Artificial Intelligence');
+INSERT INTO Teacher VALUES ('T005', 'Binisha Sharma", 'Business Administration');
+INSERT INTO Teacher VALUES ('T006', 'Saugat Gurung', 'Accounting and Finance');
+INSERT INTO Teacher VALUES ('T007', 'Biplove KC', 'Digital Business Management');
+
+
+
+INSERT INTO Module VALUES ('M004', 'Software Engineering', '30', 'T001’);
+INSERT INTO Module VALUES ('M007', 'Network OS', '30', 'T002');
+INSERT INTO Module VALUES ('M009', 'Network Security', '15", "T002');
+INSERT INTO Module VALUES ('M002", 'Databases', '15', 'T003');
+INSERT INTO Module VALUES ('M001', 'Programming', '15', "T004");
+INSERT INTO Module VALUES ('M903", 'Professional Ethics', '15', 'T005');
+NSERT INTO Module VALUES (‘M005’, 'Account', ‘30', 'T006’);
+INSERT INTO Module VALUES ('M006’, 'Economics', '30', 'T007’);
+INSERT INTO Module VALUES ('M010', 'Digital Marketing', '15', 'T007’);
+INSERT INTO Module VALUES ('M008’, 'AI Basics', '15', 'T004');
+
+
+
+INSERT INTO ProgramModule VALUES ('CS2001', 'M004');
+INSERT INTO ProgramModule VALUES ('CS2002', ‘M007');
+INSERT INTO ProgramModule VALUES (‘CS2002', ‘M009’);
+INSERT INTO ProgramModule VALUES ('CS2003’, ‘M002’);
+INSERT INTO ProgramModule VALUES ('CS2004', ‘M001');
+INSERT INTO ProgramModule VALUES ('CS2004', 'M008');
+INSERT INTO ProgramModule VALUES ('BA2001', 'M003'):
+INSERT INTO ProgramModule VALUES (‘BA2002', 'M006');
+INSERT INTO ProgramModule VALUES ('BA2002', 'M010');
+INSERT INTO ProgramModule VALUES ('BA2003', 'M005');
+INSERT INTO ProgramModule VALUES ('CS2001', ‘M001');
+
+
+
+
+INSERT INTO Student VALUES ('S001', 'Subin Khatiwada', 'subin@gmail.com', '9867452367', TO_DATE('2003-01-01', 'YYYY-MM-DD'), 'Dhading', 'CS2001');
+INSERT INTO Student VALUES ('S002', 'Aarya Singh', 'aarya@gmail.com', '9840452367', TO_DATE('2004-05-01', 'YYYY-MM-DD'), 'Jhapa', 'CS2002');
+INSERT INTO Student VALUES ('S003', 'Roshani Rajbhandari', 'roshani@gmail.com', '9840452378', TO_DATE('2004-07-15', 'YYYY-MM-DD'), 'Kathmandu', 'CS2003');
+INSERT INTO Student VALUES ('S004', 'Deepesh Bashyal', 'deepesh@gmail.com', '9840672399', TO_DATE('2004-10-12', 'YYYY-MM-DD'), 'Palpa', 'CS2004');
+INSERT INTO Student VALUES ('S005', 'Nischita Acharya', 'nischita@gmail.com', '9840672380', TO_DATE('2005-12-10', 'YYYY-MM-DD'), 'Bhaktapur', 'BA2001');
+INSERT INTO Student VALUES ('S006', 'Sita Gurung', 'sita@gmail.com', '9841652380', TO_DATE('2003-05-10', 'YYYY-MM-DD'), 'Dhading', 'BA2002');
+INSERT INTO Student VALUES ('S007', 'Manish Thapa', 'manish@gmail.com', '9841652310', TO_DATE('2003-04-21', 'YYYY-MM-DD'), 'Kathmandu', 'BA2003');
+INSERT INTO Student VALUES ('S008', 'Sabina Bhattarai', 'sabina@gmail.com', '9840688310', TO_DATE('2003-01-12', 'YYYY-MM-DD'), 'Kathmandu', 'BA2003');
+INSERT INTO Student VALUES ('S009', 'Dikshya Bashyal', 'dikshya@gmail.com', '9840672366', TO_DATE('2005-10-10', 'YYYY-MM-DD'), 'Palpa', 'CS2001');
+
+
+
+
+INSERT INTO StudentModule (StudentID, ModuleID)
+SELECT s.StudentID, pm.ModuleID
+FROM Student s
+JOIN ProgramModule pm ON s.ProgramID = pm.ProgramID;
+
+
+
+INSERT INTO Assessment VALUES (‘A001’, ‘M001’, ‘CW1’, TO DATE ('2025-01-15', ‘YYYY-MM-DD’), 40.00);
+INSERT INTO Assessment VALUES ('A002’, ‘M008’, ‘First Term', TO_DATE ('2025-01-17', ‘YYYY-MM-DD’), 20.00);
+INSERT INTO Assessment VALUES ('A003', ‘M004’, 'Project', TO_DATE ('2025-01-30', ‘YYYY-MM-DD’), 20.00);
+INSERT INTO Assessment VALUES ('A004’, ‘M002', ‘CW1’, TO DATE ('2025-01-20’, ‘YYYY-MM-DD’), 50.00);
+INSERT INTO Assessment VALUES (‘A005', ‘M005’, ‘CW5’, TO_DATE ('2025-01-25', ‘YYYY-MM-DD’), 60.00);
+INSERT INTO Assessment VALUES ('A006', ‘М003’, ‘MidTerm’, TO_DATE ('2025-02-05’, ‘YYYY-MM-DD’), 30.00);
+INSERT INTO Assessment VALUES (‘A007’, ‘M006’, ‘CW1’, TO_DATE (‘2025-01-15', ‘YYYY-MM-DD’), 50.00);
+
+
+
+
+INSERT INTO ModuleAssessment VALUES ('M001', 'A001');
+INSERT INTO ModuleAssessment VALUES ('M008', 'A002');
+INSERT INTO ModuleAssessment VALUES ('M004', 'A003');
+INSERT INTO ModuleAssessment VALUES ('M002', 'A004');
+INSERT INTO ModuleAssessment VALUES ('M005', 'A005');
+INSERT INTO ModuleAssessment VALUES ('M003', 'A006');
+INSERT INTO ModuleAssessment VALUES ('M006', 'A007');
+
+
+
+INSERT INTO Result VALUES ('RES001', 'S001', 'A001', '85.00', 'NA');
+INSERT INTO Result VALUES ('RES002', 'S001', 'A003', '82.00', 'NA');
+INSERT INTO Result VALUES ('RES003', 'S003', 'A004', '73.00', 'NA');
+INSERT INTO Result VALUES ('RES004', 'S004', 'A002', '81.00', 'NA');
+INSERT INTO Result VALUES ('RES005', 'S004', 'A001', '87.00', 'NA');
+INSERT INTO Result VALUES ('RES006', 'S005', 'A006', '35.00', 'NA');
+INSERT INTO Result VALUES ('RES007', 'S006', 'A007', '37.00', 'NA');
+INSERT INTO Result VALUES ('RES008', 'S007', 'A005', '75.00', 'NA');
+
+
+
+
+INSERT INTO Announcement VALUES ('AN001', 'M001', 'Registration for Hackathon 2025 is now open.', TO_DATE('2024-12-30', 'YYYY-MM-DD'));
+INSERT INTO Announcement VALUES ('AN002', 'M007', 'It is mandatory to complete the Quiz Questions', TO_DATE('2024-12-28', 'YYYY-MM-DD'));
+INSERT INTO Announcement VALUES ('AN003', 'M002', 'Lecture for Database Queries is Re-scheduled to Monday 5th May', TO_DATE('2024-05-03', 'YYYY-MM-DD'));
+INSERT INTO Announcement VALUES ('AN004', 'M003', 'Guidelines for MidTerm assessment is available.', TO_DATE('2024-12-30', 'YYYY-MM-DD'));
+INSERT INTO Announcement VALUES ('AN005', 'M008', 'Final Exam for AI Basics will be held on 7th January,2025', TO_DATE('2024-12-30', 'YYYY-MM-DD'));
+INSERT INTO Announcement VALUES ('AN006', 'M006', 'Students are required to prepare a presentation for Economics.', TO_DATE('2024-05-15', 'YYYY-MM-DD'));
+INSERT INTO Announcement VALUES ('AN007', 'M010', 'Extra Class for Digital Marketing scheduled for Monday, 22nd May.', TO_DATE('2024-05-17', 'YYYY-MM-DD'));
+
+
+
+INSERT INTO Resources VALUES ('R001', 'M001', 'Java Book', 'PDF Document');
+INSERT INTO Resources VALUES ('R002', 'M007', 'Unix/Linux', 'Quizzes');
+INSERT INTO Resources VALUES ('R003', 'M002', 'Database Ebook', 'E-Books');
+INSERT INTO Resources VALUES ('R004', 'M008', 'Machine Learning', 'Code Repositories');
+INSERT INTO Resources VALUES ('R005', 'M003', 'Human Psychology', 'Case Studies');
+INSERT INTO Resources VALUES ('R006', 'M010', 'Digital Marketing', 'Simulations');
+INSERT INTO Resources VALUES ('R007', 'M006', 'Economics', 'Infographics');
+
+
+
+INSERT INTO ResourceCompletion VALUES ('S004', 'R001', 'Completed', TO_DATE('2025-01-02', 'YYYY-MM-DD'), 1);
+INSERT INTO ResourceCompletion VALUES ('S004', 'R004', 'Completed', TO_DATE('2025-01-10', 'YYYY-MM-DD'), 2);
+INSERT INTO ResourceCompletion VALUES ('S002', 'R002', 'Incomplete', NULL, 1);
+INSERT INTO ResourceCompletion VALUES ('S003', 'R003', 'Completed', TO_DATE('2025-01-12', 'YYYY-MM-DD'), 1);
+INSERT INTO ResourceCompletion VALUES ('S005', 'R005', 'Completed', TO_DATE('2025-01-05', 'YYYY-MM-DD'), 1);
+INSERT INTO ResourceCompletion VALUES ('S006', 'R006', 'Incomplete', NULL, 1);
+INSERT INTO ResourceCompletion VALUES ('S006', 'R007', 'Incomplete', NULL, 2);

@@ -1,0 +1,45 @@
+DROP TABLE ResourceCompletion;
+
+
+
+DROP TABLE ModuleAssessment;
+
+
+
+DROP TABLE StudentModule;
+
+
+
+DROP TABLE ProgramModule;
+
+
+
+DROP TABLE Result;
+
+
+
+DROP TABLE Announcement;
+
+
+
+DROP TABLE Resources;
+
+
+
+DROP TABLE Assessment;
+
+
+
+DROP TABLE Module;
+
+
+
+DROP TABLE Student;
+
+
+
+DROP TABLE Program;
+
+
+
+DROP TABLE Teacher;

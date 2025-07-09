@@ -1,0 +1,111 @@
+CREATE TABLE Program
+(ProgramID VARCHAR2 (25) PRIMARY KEY,
+ProgramName VARCHAR2 (50) NOT NULL UNIQUE,
+ProgramDescription VARCHAR2 (100) NOT NULL);
+
+
+
+CREATE TABLE Teacher
+(TeacherID VARCHAR2 (25) PRIMARY KEY, 
+TeacherName VARCHAR2 (50) NOT NULL, 
+Department VARCHAR2 (50) NOT NULL);
+
+
+
+CREATE TABLE Module
+(ModuleID VARCHAR2 (25) PRIMARY KEY, 
+ModuleName VARCHAR2 (50) NOT NULL,
+Credits NUMBER (4,1) NOT NULL, 
+TeacherID VARCHAR2 (25) NOT NULL,
+FOREIGN KEY (TeacherID) REFERENCES Teacher (TeacherID));
+
+
+
+CREATE TABLE ProgramModule
+(ProgramID VARCHAR2 (25) NOT NULL,
+ModuleID VARCHAR2 (25) NOT NULL, 
+PRIMARY KEY (ProgramID, ModuleID),
+FOREIGN KEY (ProgramID) REFERENCES Program (ProgramID), 
+FOREIGN KEY (ModuleID) REFERENCES Module(ModuleID));
+
+
+
+CREATE TABLE Student
+(StudentID VARCHAR2 (25) PRIMARY KEY,
+StudentName VARCHAR2 (50) NOT NULL,
+StudentEmail VARCHAR2 (50) NOT NULL UNIQUE, 
+StudentPhone VARCHAR2 (15) NOT NULL UNIQUE,
+StudentDOB DATE NOT NULL,
+StudentAddress VARCHAR2 (100) NOT NULL,
+ProgramID VARCHAR2 (25) NOT NULL, 
+FOREIGN KEY (ProgramID) REFERENCES Program(ProgramID));
+
+
+
+CREATE TABLE StudentModule
+(StudentID VARCHAR2 (25) NOT NULL,
+ModuleID VARCHAR2 (25) NOT NULL,
+PRIMARY KEY (StudentID, ModuleID),
+FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+FOREIGN KEY (ModuleID) REFERENCES Module(ModuleID));
+
+
+
+CREATE TABLE Assessment
+(AssessmentID VARCHAR2 (25) PRIMARY KEY,
+ModuleID VARCHAR2 (25) NOT NULL,
+AssessmentTitle VARCHAR2 (50) NOT NULL,
+Deadline DATE NOT NULL,
+Weightage NUMBER (5,2) NOT NULL, 
+FOREIGN KEY (ModuleID) REFERENCES Module(ModuleID));
+
+
+
+CREATE TABLE ModuleAssessment
+(ModuleID VARCHAR2 (25) NOT NULL,
+AssessmentID VARCHAR2 (25) NOT NULL,
+PRIMARY KEY (ModuleID, AssessmentID),
+FOREIGN KEY (ModuleID) REFERENCES Module(ModuleID),
+FOREIGN KEY (AssessmentID) REFERENCES Assessment(AssessmentID));
+
+
+
+CREATE TABLE Result
+(ResultID VARCHAR2 (25) PRIMARY KEY,
+StudentID VARCHAR2 (25) NOT NULL,
+AssessmentID VARCHAR2 (25) NOT NULL,
+ObtainedMarks NUMBER (5,2) NOT NULL,
+Grade VARCHAR2 (2) DEFAULT 'NA',
+FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+FOREIGN KEY (AssessmentID) REFERENCES Assessment(AssessmentID));
+
+
+
+CREATE TABLE Announcement
+(AnnouncementID VARCHAR2 (25) PRIMARY KEY,
+ModuleID VARCHAR2 (25) NOT NULL,
+AnnouncementDetails VARCHAR2 (100) NOT NULL,
+PostedDate DATE NOT NULL,
+FOREIGN KEY (ModuleID) REFERENCES Module(ModuleID));
+
+
+
+CREATE TABLE Resources
+(ResourceID VARCHAR2 (25) PRIMARY KEY,
+ModuleID VARCHAR2 (25) NOT NULL,
+ResourceName VARCHAR2 (50) NOT NULL, 
+ResourceType VARCHAR2 (50) NOT NULL,
+FOREIGN KEY (ModuleID) REFERENCES Module(ModuleID));
+
+
+
+CREATE TABLE ResourceCompletion
+(StudentID VARCHAR2 (25) NOT NULL,
+ ResourceID VARCHAR2 (25) NOT NULL,
+CompletionStatus VARCHAR2 (15) NOT NULL,
+CompletionDate DATE,
+CompletionOrder NUMBER (2,0),
+PRIMARY KEY (StudentID, ResourceID),
+FOREIGN KEY (StudentID) REFERENCES Student (StudentID),
+FOREIGN KEY (ResourceID) REFERENCES Resources (ResourceID));
+

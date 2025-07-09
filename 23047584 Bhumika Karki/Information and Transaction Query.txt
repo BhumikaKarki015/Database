@@ -1,0 +1,129 @@
+Information Query: 1
+
+SELECT p.ProgramName,
+COUNT (s.StudentID) AS TotalStudents FROM Program p
+LEFT JOIN Student s ON p.ProgramID = s.ProgramID
+GROUP BY p.ProgramName;
+
+
+
+Information Query:2
+
+SELECT AnnouncementID, AnnouncementDetails, PostedDate
+FROM Announcement
+WHERE ModuleID = 'M002'
+AND PostedDate BETWEEN TO_DATE('01-MAY-2024', 'DD-MON-YYYY') AND TO_DATE('28-MAY-2024', 'DD-MM-YYYY');
+
+
+
+Information Query:3
+
+SELECT m.ModuleName,
+COUNT (r.ResourceID) AS TotalResources
+FROM Module m
+LEFT JOIN Resources r ON m.ModuleID = r.ModuleID
+WHERE m.ModuleName LIKE 'D%'
+GROUP BY m.ModuleName;
+
+
+
+Information Query:4
+
+SELECT DISTINCT s.StudentName, p.ProgramName
+FROM Student s
+JOIN Program p ON s.ProgramID = p.ProgramID
+JOIN StudentModule sm ON s.StudentID = sm.StudentID
+WHERE sm.ModuleID = 'M005'
+AND s.StudentID NOT IN
+(SELECT r.StudentID
+FROM Result r
+JOIN Assessment a ON r.AssessmentID = a.AssessmentID
+JOIN ModuleAssessment ma ON ma.AssessmentID = a.AssessmentID
+WHERE ma.ModuleID = 'M005'); 
+
+
+
+Information Query:5
+
+SELECT t.TeacherName,
+COUNT (m.ModuleID) AS TotalModules
+FROM Teacher t
+JOIN Module m ON t.TeacherID = m.TeacherID
+GROUP BY t.TeacherName
+HAVING COUNT (m.ModuleID) > 1;
+
+
+
+Transaction Query:1
+
+SELECT ma.ModuleID, m.ModuleName, MAX(a.Deadline) AS Deadline
+FROM ModuleAssessment ma
+JOIN Module m ON ma.ModuleID = m.ModuleID
+JOIN Assessment a ON ma.AssessmentID = a.AssessmentID
+GROUP BY ma.ModuleID, m.ModuleName
+HAVING MAX(a.Deadline) = (SELECT MAX(Deadline) FROM Assessment);
+
+
+
+Transaction Query:2
+
+SELECT * FROM
+(SELECT s.StudentName,
+SUM (r.ObtainedMarks) AS TotalScore
+FROM Student s
+JOIN Result r ON s.StudentID = r.StudentID
+GROUP BY s.StudentName
+ORDER BY TotalScore DESC
+)
+WHERE ROWNUM <=3;
+
+
+
+Transaction Query:3
+
+SELECT p.ProgramName,
+COUNT (a.AssessmentID) AS TotalAssessments,
+AVG (r.ObtainedMarks) AS AverageScore
+FROM Program p JOIN ProgramModule pm ON p.ProgramID = pm.ProgramID
+JOIN ModuleAssessment ma ON pm.ModuleID = ma.ModuleID
+JOIN Assessment a ON ma.AssessmentID = a.AssessmentID
+JOIN Result r ON a.AssessmentID = r.AssessmentID
+GROUP BY p.ProgramName;
+
+
+
+Transaction Query:4
+
+SELECT DISTINCT s.StudentName, sm.ModuleID, r.ObtainedMarks
+FROM Student s
+JOIN StudentModule sm ON s.StudentID = sm.StudentID
+JOIN Module m ON sm.ModuleID = m.ModuleID
+JOIN Result r ON s.StudentID = r.StudentID
+JOIN Assessment a ON r.AssessmentID = a.AssessmentID
+JOIN ModuleAssessment ma ON a.AssessmentID = ma.AssessmentID
+WHERE m.ModuleName = 'Databases'
+AND r.ObtainedMarks >=
+ (SELECT AVG(r2.ObtainedMarks)
+FROM Result r2
+JOIN Assessment a2 ON r2.AssessmentID = a2.AssessmentID
+JOIN ModuleAssessment ma2 ON a2.AssessmentID = ma2.AssessmentID
+JOIN Module m2 ON ma2.ModuleID = m2.ModuleID
+WHERE m2.ModuleName = 'Databases');
+
+
+
+Transaction Query:5
+
+SELECT s.StudentName,
+ma.ModuleID,
+SUM(r.ObtainedMarks) AS TotalAggregateMarks,
+CASE
+WHEN SUM(r.ObtainedMarks) >= 40 THEN 'Pass'
+ELSE 'Fail'
+END AS Remarks
+FROM Student s
+JOIN Result r ON s.StudentID = r.StudentID
+JOIN Assessment a ON r.AssessmentID = a.AssessmentID
+JOIN ModuleAssessment ma ON a.AssessmentID = ma.AssessmentID
+GROUP BY s.StudentName, ma.ModuleID
+ORDER BY s.StudentName, ma.ModuleID;

@@ -1,0 +1,25 @@
+ALTER TABLE Assessment
+ADD PassingMarks Number (5) DEFAULT 40 NOT NULL;
+
+ALTER TABLE Assessment
+ADD TotalMarks NUMBER(5) DEFAULT 100 NOT NULL;
+
+ALTER TABLE Assessment
+DROP COLUMN ModuleID;
+
+
+
+
+ALTER TABLE Announcement
+ADD TeacherID VARCHAR2 (25);
+
+UPDATE Announcement
+SET TeacherID = (SELECT TeacherID
+FROM Module
+WHERE Module.ModuleID = Announcement.ModuleID);
+
+ALTER TABLE Announcement
+MODIFY TeacherID VARCHAR2 (25) NOT NULL;
+ALTER TABLE Announcement
+ADD CONSTRAINT FK_TeacherID
+FOREIGN KEY (TeacherID) REFERENCES Teacher(TeacherID);
